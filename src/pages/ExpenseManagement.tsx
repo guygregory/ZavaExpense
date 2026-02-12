@@ -67,9 +67,6 @@ export default function ExpenseManagement() {
   const totalAmount = (r: Report) =>
     r.expenses.reduce((sum, e) => sum + e.amount, 0);
 
-  const receiptCount = (r: Report) =>
-    r.expenses.filter((e) => e.receipt).length;
-
   const selectedReport = reports.find((r) => r.id === selectedId) ?? null;
   const canSubmit =
     selectedReport !== null &&
