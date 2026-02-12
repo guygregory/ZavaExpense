@@ -12,10 +12,10 @@ function createSeedReports(): Report[] {
     new Date(now.getFullYear(), now.getMonth() - n, 1);
 
   const cats = [
-    { label: "Ground Transportation", paymentMethod: "Cash" },
+    { label: "Travel", paymentMethod: "Cash" },
     { label: "Hotel", paymentMethod: "Cash" },
-    { label: "Hardware (Supplies General)", paymentMethod: "Cash" },
-    { label: "Gift | external", paymentMethod: "Cash" },
+    { label: "Hardware", paymentMethod: "Cash" },
+    { label: "Gift", paymentMethod: "Cash" },
   ];
 
   let eid = 1000;

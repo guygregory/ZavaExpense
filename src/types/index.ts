@@ -30,10 +30,14 @@ export interface Report {
 }
 
 export const EXPENSE_CATEGORIES: { label: string; paymentMethod: string }[] = [
-  { label: "Gift | external", paymentMethod: "Cash" },
-  { label: "Government Official", paymentMethod: "Cash" },
-  { label: "Ground Transportation", paymentMethod: "Cash" },
-  { label: "Hardware (Supplies General)", paymentMethod: "Cash" },
-  { label: "Hardware Dev (Prod Dev-Other)", paymentMethod: "Cash" },
+  { label: "Gift", paymentMethod: "Cash" },
+  { label: "Hardware", paymentMethod: "Cash" },
   { label: "Hotel", paymentMethod: "Cash" },
+  { label: "Marketing", paymentMethod: "Cash" },
+  { label: "Meals", paymentMethod: "Cash" },
+  { label: "Morale", paymentMethod: "Cash" },
+  { label: "Office Supplies", paymentMethod: "Cash" },
+  { label: "Software", paymentMethod: "Cash" },
+  { label: "Training", paymentMethod: "Cash" },
+  { label: "Travel", paymentMethod: "Cash" },
 ];
