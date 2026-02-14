@@ -20,21 +20,14 @@ export default function ExpenseManagement() {
   }, []);
 
   const handleNewReport = () => {
-    const now = new Date();
-    const monthsBack = reports.length;
-    const target = new Date(now.getFullYear(), now.getMonth() - monthsBack, 1);
-    const monthNames = [
-      "January", "February", "March", "April", "May", "June",
-      "July", "August", "September", "October", "November", "December",
-    ];
     const report: Report = {
       id: generateId(),
       reportNumber: generateReportNumber(),
-      purpose: `${monthNames[target.getMonth()]} ${target.getFullYear()} expenses`,
+      purpose: "Untitled Report",
       status: "Draft",
       expenses: [],
     };
-    const updated = [...reports, report];
+    const updated = [report, ...reports];
     saveReports(updated);
     setReports(updated);
   };
