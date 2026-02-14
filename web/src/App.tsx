@@ -8,7 +8,8 @@ function App() {
     <BrowserRouter>
       <div className="app-shell" data-testid="app-shell">
         <header className="top-banner" data-testid="top-banner">
-          <span className="top-banner__title">Big Systems Expenses</span>
+          <img src="/zavalogo.png" alt="Logo" className="top-banner__logo" />
+          <span className="top-banner__title">Expense</span>
         </header>
         <Routes>
           <Route path="/" element={<ExpenseManagement />} />

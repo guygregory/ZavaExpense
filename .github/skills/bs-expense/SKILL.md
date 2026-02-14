@@ -139,7 +139,7 @@ Use built-in vision capabilities to extract the following from the receipt image
 ## UI Element Reference
 
 ### Main Expense Management Page
-- **Header**: Shows "Big Systems Expenses" title with "Expense management" subtitle
+- **Header**: Shows company logo with "Expense" title and "Expense management" subtitle
 - **Tabs**: Reports | Receipts | Expenses
 - **Actions Bar**: + New expense report | Delete | Submit | Recall | Copy | View history | Reset session
 - **Report List Columns**: Expense report number | Purpose | Amount | Approval status

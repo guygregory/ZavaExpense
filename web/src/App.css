@@ -31,15 +31,26 @@ body {
 
 /* Top banner */
 .top-banner {
-  background: #002050;
+  background: #002140;
   padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.top-banner__logo {
+  height: 29px;
+  width: auto;
 }
 
 .top-banner__title {
   color: #ffffff;
-  font-size: 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 21.6px;
   font-weight: 600;
   letter-spacing: 0.3px;
+  position: relative;
+  top: -1px;
 }
 
 /* Page layout */
