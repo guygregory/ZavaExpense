@@ -1,5 +1,5 @@
 ---
-name: bs-expense
+name: zava-expense
 description: Skill for adding expense items to expense reports in the Zava Expense system. Uses AI vision to analyze receipt images (.png), extract transaction details, categorize expenses, and attach receipts. Integrates with WorkIQ for calendar lookup to determine business purpose. Use when users ask to process receipts, add expenses, create expense reports, or manage expense claims.
 ---
 
