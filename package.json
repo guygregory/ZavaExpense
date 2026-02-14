@@ -1,6 +1,6 @@
 {
-  "name": "BSExpense",
+  "name": "ZavaExpense",
   "version": "1.0.0",
-  "description": "BS Expense Receipt Processing",
+  "description": "Zava Expense Receipt Processing",
   "dependencies": {}
 }

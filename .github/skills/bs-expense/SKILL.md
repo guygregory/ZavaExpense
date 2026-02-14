@@ -1,17 +1,17 @@
 ---
 name: bs-expense
-description: Skill for adding expense items to expense reports in the Big Systems Expenses system (BSExpense). Uses AI vision to analyze receipt images (.png), extract transaction details, categorize expenses, and attach receipts. Integrates with WorkIQ for calendar lookup to determine business purpose. Use when users ask to process receipts, add expenses, create expense reports, or manage expense claims.
+description: Skill for adding expense items to expense reports in the Zava Expense system. Uses AI vision to analyze receipt images (.png), extract transaction details, categorize expenses, and attach receipts. Integrates with WorkIQ for calendar lookup to determine business purpose. Use when users ask to process receipts, add expenses, create expense reports, or manage expense claims.
 ---
 
-# BS Expense Tool
+# Zava Expense Tool
 
-This skill enables interaction with the Big Systems Expenses system (BSExpense) for processing expense receipts and managing expense reports. **This skill requires the Playwright MCP tool** for browser automation and **WorkIQ MCP tool** for calendar lookup.
+This skill enables interaction with the Zava Expense system for processing expense receipts and managing expense reports. **This skill requires the Playwright MCP tool** for browser automation and **WorkIQ MCP tool** for calendar lookup.
 
 ## Key URLs
 
 | Page | URL |
 |------|-----|
-| Expense Management | https://aka.ms/bsexpense |
+| Expense Management | https://aka.ms/ZavaExpense |
 
 ## Receipt File Location
 
@@ -23,7 +23,7 @@ This skill enables interaction with the Big Systems Expenses system (BSExpense) 
 
 | Tool | Purpose |
 |------|---------|
-| Playwright MCP | Browser automation for MS Expense system |
+| Playwright MCP | Browser automation for the Zava Expense system |
 | WorkIQ MCP | Calendar lookup to determine business purpose |
 | Built-in Vision | Analyze receipt images to extract transaction details |
 
@@ -60,8 +60,8 @@ When creating a new expense item:
 
 ## Workflow for Processing Receipts
 
-### Step 1: Navigate to BS Expense
-1. Use Playwright MCP to browse to https://aka.ms/bsexpense
+### Step 1: Navigate to Zava Expense
+1. Use Playwright MCP to browse to https://aka.ms/ZavaExpense
 2. Wait for the Expense Management page to load
 3. The page shows a list of expense reports with columns: Expense report number, Purpose, Amount, Receipts attached, Approval status, Invoice, Payment voucher, Payment date
 
@@ -221,7 +221,7 @@ Use built-in vision capabilities to extract the following from the receipt image
 
 | Action | Permission Required |
 |--------|---------------------|
-| Navigate to MS Expense | ✅ No permission needed |
+| Navigate to Zava Expense | ✅ No permission needed |
 | View expense reports | ✅ No permission needed |
 | Open expense report | ✅ No permission needed |
 | Create new expense report | ✅ No permission needed |
