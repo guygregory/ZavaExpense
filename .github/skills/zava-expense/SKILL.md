@@ -15,9 +15,9 @@ This skill enables interaction with the Zava Expense system for processing expen
 
 ## Receipt File Location
 
-- **Local Path**: `./receipts`
+- **Receipts Directory**: `./receipts/uk`
 - **File Format**: `.png` images only
-- Only access files in this specific folder - do not access any other files or folders on the local PC 
+- Only access files in the receipts directory - do not access any other files or folders on the local PC 
 
 ## Required Tools
 
@@ -75,7 +75,7 @@ When creating a new expense item:
    - Save the new report
 
 ### Step 3: Check Receipt Files and Batch Analyze
-1. Check the `./receipts` directory for `.png` files
+1. Check the receipts directory for `.png` files
 2. **If multiple receipts exist**, analyze all receipts upfront before opening the browser:
    - Run AI Vision (Step 4) on every `.png` file first to extract transaction details
    - Run WorkIQ lookups (Step 5) for each unique transaction date
@@ -123,13 +123,13 @@ Use built-in vision capabilities to extract the following from the receipt image
 4. Click "Actions" and select "Attach receipt"
 5. A "Receipts" panel opens with "Add new" tab
 6. Click "Browse" button
-7. In the file dialog, select the corresponding `.png` receipt file from the `./receipts` directory
+7. In the file dialog, select the corresponding `.png` receipt file from the receipts directory
 8. Click "Open" to upload
 9. Click "Upload" button to attach the receipt
 10. Click "OK" or "Close" to complete
 
 ### Step 8: Repeat for Additional Receipts
-- Repeat Steps 4-7 for each `.png` receipt file
+- Repeat Steps 4-7 for each `.png` receipt file in the receipts directory
 
 ### Step 9: Return to Expense Management Page and Close Browser
 1. After all receipts have been processed, click "Save and close" to return to the Expense Management page
@@ -187,7 +187,7 @@ Use built-in vision capabilities to extract the following from the receipt image
 5. Amount: 15.00, Currency: GBP
 6. Merchant: Uber
 7. Description: "Uber transportation to customer meeting at Contoso Ltd"
-8. Save, then Actions > Attach receipt > Browse to receipt file from `./receipts`
+8. Save, then Actions > Attach receipt > Browse to receipt file from the receipts directory
 
 ### Example 2: Process a Hotel Receipt
 **Receipt shows**: Premier Inn, £89.00, dated 20/01/2026
@@ -200,20 +200,20 @@ Use built-in vision capabilities to extract the following from the receipt image
 5. Amount: 89.00, Currency: GBP
 6. Merchant: Premier Inn
 7. Description: "Hotel accommodation for Tech Conference in Manchester"
-8. Save, then Actions > Attach receipt > Browse to receipt file from `./receipts`
+8. Save, then Actions > Attach receipt > Browse to receipt file from the receipts directory
 
 ## Guidelines
 
 1. **Always use GBP** as the currency
 2. **Transaction date** is the date on the receipt, not the travel date (they may differ)
 3. **Date format**: Always use `yyyy-MM-dd` for the date input field (it is `type="date"`). Never use `DD/MM/YYYY`.
-4. **File upload strategy**: Ensure receipt files are accessible in the `/receipts` working directory before attempting upload. If permission issues occur, verify the file path and retry.
+4. **File upload strategy**: Ensure receipt files are accessible in the receipts directory before attempting upload. If permission issues occur, verify the file path and retry.
 5. **Use AI vision** to analyze receipt images - no additional code required
 6. **Use WorkIQ** with highly targeted queries that include context from the receipt such as location or merchant (e.g., "What is the business event in [location] on [date]?") to minimize returned data and avoid retrieving excessive calendar information
 7. **Only access** the specified receipt folder - do not browse other directories
 8. **Match expense category** to receipt type (transportation, hotel, hardware, etc.)
 9. **Generate natural language descriptions** that combine receipt details with calendar context
-10. **Attach receipts** after saving each expense item, uploading from the `./receipts` directory
+10. **Attach receipts** after saving each expense item, uploading from the receipts directory
 11. **Form filling strategy**: Fill the date field separately first, then batch-fill text fields (Amount, Merchant, Business Purpose). Handle dropdowns (Category, Currency) individually.
 12. **Close browser**: After processing all receipts, navigate back to the Expense Management page, then close the browser. Inform the user that all expenses have been added.
 
