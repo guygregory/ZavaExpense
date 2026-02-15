@@ -1,4 +1,5 @@
 import type { Report, Expense } from "../types";
+import { isIsoDate, legacyDateToIso, normalizeCurrencyCode } from "../localization/localeUtils";
 
 const STORAGE_KEY = "bs-expense-reports";
 
@@ -46,8 +47,8 @@ function createSeedReports(): Report[] {
       purpose: "January 2026 expenses",
       status: "Processed",
       expenses: [
-        expense("05/01/2026", 0, 34.50, "Uber", "Taxi to client office", receipt("uber-receipt-jan.pdf")),
-        expense("12/01/2026", 1, 189.00, "Premier Inn", "Overnight stay – London", receipt("premier-inn-invoice.png")),
+        expense("2026-01-05", 0, 34.50, "Uber", "Taxi to client office", receipt("uber-receipt-jan.pdf")),
+        expense("2026-01-12", 1, 189.00, "Premier Inn", "Overnight stay – London", receipt("premier-inn-invoice.png")),
       ],
     },
     {
@@ -56,9 +57,9 @@ function createSeedReports(): Report[] {
       purpose: "December 2025 expenses",
       status: "Processed",
       expenses: [
-        expense("03/12/2025", 0, 22.00, "Bolt", "Taxi to airport", receipt("bolt-ride-dec.png")),
-        expense("10/12/2025", 2, 74.99, "Amazon", "USB-C hub for dev laptop", receipt("amazon-order-dec.pdf")),
-        expense("18/12/2025", 1, 210.00, "Hilton", "Hotel – Manchester meeting", receipt("hilton-folio.pdf")),
+        expense("2025-12-03", 0, 22.00, "Bolt", "Taxi to airport", receipt("bolt-ride-dec.png")),
+        expense("2025-12-10", 2, 74.99, "Amazon", "USB-C hub for dev laptop", receipt("amazon-order-dec.pdf")),
+        expense("2025-12-18", 1, 210.00, "Hilton", "Hotel – Manchester meeting", receipt("hilton-folio.pdf")),
       ],
     },
     {
@@ -67,10 +68,10 @@ function createSeedReports(): Report[] {
       purpose: "November 2025 expenses",
       status: "Processed",
       expenses: [
-        expense("02/11/2025", 3, 45.00, "John Lewis", "Client gift basket", receipt("johnlewis-receipt.png")),
-        expense("08/11/2025", 0, 28.50, "Addison Lee", "Taxi to Reading office", receipt("addisonlee-nov.pdf")),
-        expense("15/11/2025", 1, 175.00, "Travelodge", "Overnight stay – Birmingham", receipt("travelodge-confirmation.pdf")),
-        expense("22/11/2025", 2, 59.99, "Currys", "Wireless mouse & keyboard", receipt("currys-receipt.png")),
+        expense("2025-11-02", 3, 45.00, "John Lewis", "Client gift basket", receipt("johnlewis-receipt.png")),
+        expense("2025-11-08", 0, 28.50, "Addison Lee", "Taxi to Reading office", receipt("addisonlee-nov.pdf")),
+        expense("2025-11-15", 1, 175.00, "Travelodge", "Overnight stay – Birmingham", receipt("travelodge-confirmation.pdf")),
+        expense("2025-11-22", 2, 59.99, "Currys", "Wireless mouse & keyboard", receipt("currys-receipt.png")),
       ],
     },
     {
@@ -79,17 +80,76 @@ function createSeedReports(): Report[] {
       purpose: "October 2025 expenses",
       status: "Processed",
       expenses: [
-        expense("06/10/2025", 0, 41.00, "Uber", "Taxi to Heathrow", receipt("uber-heathrow-oct.pdf")),
-        expense("19/10/2025", 1, 199.00, "Holiday Inn", "Hotel – Edinburgh trip", receipt("holidayinn-edinburgh.png")),
+        expense("2025-10-06", 0, 41.00, "Uber", "Taxi to Heathrow", receipt("uber-heathrow-oct.pdf")),
+        expense("2025-10-19", 1, 199.00, "Holiday Inn", "Hotel – Edinburgh trip", receipt("holidayinn-edinburgh.png")),
       ],
     },
   ];
 }
 
+function normalizeExpense(expense: Expense): { expense: Expense; changed: boolean } {
+  let changed = false;
+
+  let date = expense.date;
+  if (!isIsoDate(date)) {
+    const migratedDate = legacyDateToIso(date);
+    if (migratedDate) {
+      date = migratedDate;
+      changed = true;
+    }
+  }
+
+  const rawCurrency = typeof expense.currency === "string" ? expense.currency : "GBP";
+  let currency = normalizeCurrencyCode(rawCurrency);
+  if (currency === "£") currency = "GBP";
+  if (currency === "$") currency = "USD";
+  if (currency === "€") currency = "EUR";
+  if (currency !== rawCurrency) changed = true;
+
+  return {
+    expense: {
+      ...expense,
+      date,
+      currency,
+    },
+    changed,
+  };
+}
+
+function normalizeReports(reports: Report[]): { reports: Report[]; changed: boolean } {
+  let changed = false;
+
+  const normalized = reports.map((report) => {
+    let reportChanged = false;
+    const normalizedExpenses = report.expenses.map((expense) => {
+      const normalizedExpense = normalizeExpense(expense);
+      if (normalizedExpense.changed) {
+        changed = true;
+        reportChanged = true;
+      }
+      return normalizedExpense.expense;
+    });
+
+    return reportChanged
+      ? {
+          ...report,
+          expenses: normalizedExpenses,
+        }
+      : report;
+  });
+
+  return { reports: normalized, changed };
+}
+
 export function loadReports(): Report[] {
   try {
     const raw = sessionStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw);
+    if (raw) {
+      const parsed = JSON.parse(raw) as Report[];
+      const normalized = normalizeReports(parsed);
+      if (normalized.changed) saveReports(normalized.reports);
+      return normalized.reports;
+    }
     const seed = createSeedReports();
     saveReports(seed);
     return seed;

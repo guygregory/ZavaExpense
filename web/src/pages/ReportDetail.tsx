@@ -6,8 +6,10 @@ import { loadReports, saveReports } from "../state/store";
 import NewExpensePanel from "../components/NewExpensePanel";
 import ExpenseDetailsPanel from "../components/ExpenseDetailsPanel";
 import ReceiptUploadModal from "../components/ReceiptUploadModal";
+import { useLocale } from "../localization/useLocale";
 
 export default function ReportDetail() {
+  const { locale, formatCurrency, formatDate } = useLocale();
   const { reportId } = useParams<{ reportId: string }>();
   const navigate = useNavigate();
   const [reports, setReports] = useState<Report[]>(loadReports);
@@ -152,7 +154,7 @@ export default function ReportDetail() {
         <div className="summary-item">
           <span className="summary-label">To be paid</span>
           <span className="summary-value" data-testid="summary-amount">
-            £{totalAmount.toFixed(2)}
+            {formatCurrency(totalAmount)}
           </span>
         </div>
         <div className="summary-item">
@@ -245,7 +247,7 @@ export default function ReportDetail() {
                   <th>Expense category</th>
                   <th>Merchant</th>
                   <th>Amount</th>
-                  <th>Amount in GBP</th>
+                  <th>{`Amount in ${locale.currencyCode}`}</th>
                   <th>Payment method</th>
                   <th>Receipts attached</th>
                 </tr>
@@ -268,11 +270,11 @@ export default function ReportDetail() {
                       setShowNewExpense(false);
                     }}
                   >
-                    <td data-testid={`expense-date-${exp.id}`}>{exp.date}</td>
+                    <td data-testid={`expense-date-${exp.id}`}>{formatDate(exp.date)}</td>
                     <td data-testid={`expense-category-${exp.id}`}>{exp.category}</td>
                     <td data-testid={`expense-merchant-${exp.id}`}>{exp.merchant}</td>
-                    <td data-testid={`expense-amount-${exp.id}`}>£{exp.amount.toFixed(2)}</td>
-                    <td data-testid={`expense-gbp-${exp.id}`}>£{exp.amount.toFixed(2)}</td>
+                    <td data-testid={`expense-amount-${exp.id}`}>{formatCurrency(exp.amount)}</td>
+                    <td data-testid={`expense-gbp-${exp.id}`}>{formatCurrency(exp.amount)}</td>
                     <td data-testid={`expense-payment-${exp.id}`}>{exp.paymentMethod}</td>
                     <td data-testid={`expense-receipts-${exp.id}`}>
                       {exp.receipt ? 1 : 0}

@@ -6,12 +6,14 @@ export interface ReceiptRef {
   dataUrl: string;
 }
 
+export type CurrencyCode = string;
+
 export interface Expense {
   id: string;
   category: string;
-  date: string; // DD/MM/YYYY
+  date: string; // ISO date: YYYY-MM-DD
   amount: number;
-  currency: "GBP";
+  currency: CurrencyCode;
   paymentMethod: string;
   merchant: string;
   description: string;

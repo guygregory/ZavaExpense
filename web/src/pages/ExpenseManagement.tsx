@@ -8,8 +8,10 @@ import {
   generateReportNumber,
   generateId,
 } from "../state/store";
+import { useLocale } from "../localization/useLocale";
 
 export default function ExpenseManagement() {
+  const { formatCurrency } = useLocale();
   const [reports, setReports] = useState<Report[]>(loadReports);
   const [activeTab, setActiveTab] = useState<"Reports" | "Receipts" | "Expenses">("Reports");
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -173,7 +175,7 @@ export default function ExpenseManagement() {
                 </td>
                 <td data-testid={`report-purpose-${r.reportNumber}`}>{r.purpose}</td>
                 <td data-testid={`report-amount-${r.reportNumber}`}>
-                  £{totalAmount(r).toFixed(2)}
+                  {formatCurrency(totalAmount(r))}
                 </td>
                 <td data-testid={`report-status-${r.reportNumber}`}>{r.status}</td>
               </tr>

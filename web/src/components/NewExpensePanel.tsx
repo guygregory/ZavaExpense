@@ -2,6 +2,8 @@ import { useState } from "react";
 import type { Expense } from "../types";
 import { EXPENSE_CATEGORIES } from "../types";
 import { generateId } from "../state/store";
+import { useLocale } from "../localization/useLocale";
+import { isIsoDate } from "../localization/localeUtils";
 
 interface Props {
   onSave: (expense: Expense) => void;
@@ -28,28 +30,11 @@ function getPaymentMethod(category: string): string {
 }
 
 function validateDate(d: string): boolean {
-  if (!/^\d{2}\/\d{2}\/\d{4}$/.test(d)) return false;
-  const [dd, mm, yyyy] = d.split("/").map(Number);
-  if (mm < 1 || mm > 12 || dd < 1 || dd > 31 || yyyy < 2000) return false;
-  return true;
-}
-
-/** Convert DD/MM/YYYY -> YYYY-MM-DD for the native date input */
-function toIsoDate(ddmmyyyy: string): string {
-  if (!ddmmyyyy) return "";
-  const parts = ddmmyyyy.split("/");
-  if (parts.length !== 3) return "";
-  return `${parts[2]}-${parts[1]}-${parts[0]}`;
-}
-
-/** Convert YYYY-MM-DD (native date input value) -> DD/MM/YYYY */
-function fromIsoDate(iso: string): string {
-  if (!iso) return "";
-  const [yyyy, mm, dd] = iso.split("-");
-  return `${dd}/${mm}/${yyyy}`;
+  return isIsoDate(d);
 }
 
 export default function NewExpensePanel({ onSave, onSaveAndNew, onCancel }: Props) {
+  const { locale } = useLocale();
   const [form, setForm] = useState(EMPTY());
   const [errors, setErrors] = useState<string[]>([]);
 
@@ -60,7 +45,7 @@ export default function NewExpensePanel({ onSave, onSaveAndNew, onCancel }: Prop
     const errs: string[] = [];
     if (!form.merchant.trim()) errs.push("Merchant is required.");
     if (!form.date.trim()) errs.push("Date is required.");
-    else if (!validateDate(form.date)) errs.push("Date must be DD/MM/YYYY format.");
+    else if (!validateDate(form.date)) errs.push("Date must be valid.");
     const amt = parseFloat(form.amount);
     if (isNaN(amt) || amt <= 0) errs.push("Amount must be greater than 0.");
     return errs;
@@ -71,7 +56,7 @@ export default function NewExpensePanel({ onSave, onSaveAndNew, onCancel }: Prop
     category: form.category,
     date: form.date,
     amount: parseFloat(form.amount),
-    currency: "GBP",
+    currency: locale.currencyCode,
     paymentMethod: getPaymentMethod(form.category),
     merchant: form.merchant,
     description: form.description,
@@ -136,8 +121,8 @@ export default function NewExpensePanel({ onSave, onSaveAndNew, onCancel }: Prop
           id="date"
           type="date"
           data-testid="expense-date"
-          value={toIsoDate(form.date)}
-          onChange={(e) => set("date", fromIsoDate(e.target.value))}
+          value={form.date}
+          onChange={(e) => set("date", e.target.value)}
         />
       </div>
 
@@ -157,8 +142,8 @@ export default function NewExpensePanel({ onSave, onSaveAndNew, onCancel }: Prop
 
       <div className="form-group">
         <label htmlFor="currency">Currency</label>
-        <select id="currency" data-testid="expense-currency" value="GBP" disabled>
-          <option value="GBP">GBP</option>
+        <select id="currency" data-testid="expense-currency" value={locale.currencyCode} disabled>
+          <option value={locale.currencyCode}>{locale.currencyCode}</option>
         </select>
       </div>
 

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { Expense } from "../types";
+import { useLocale } from "../localization/useLocale";
 
 interface Props {
   expense: Expense;
@@ -14,6 +15,7 @@ export default function ExpenseDetailsPanel({
   onAttachReceipt,
   onClose,
 }: Props) {
+  const { formatCurrency, formatDate } = useLocale();
   const [actionsOpen, setActionsOpen] = useState(false);
 
   return (
@@ -33,7 +35,7 @@ export default function ExpenseDetailsPanel({
         </div>
         <div className="detail-row">
           <span className="detail-label">Date</span>
-          <span className="detail-value" data-testid="detail-date">{expense.date}</span>
+          <span className="detail-value" data-testid="detail-date">{formatDate(expense.date)}</span>
         </div>
         <div className="detail-row">
           <span className="detail-label">Merchant</span>
@@ -42,7 +44,7 @@ export default function ExpenseDetailsPanel({
         <div className="detail-row">
           <span className="detail-label">Amount</span>
           <span className="detail-value" data-testid="detail-amount">
-            £{expense.amount.toFixed(2)}
+            {formatCurrency(expense.amount)}
           </span>
         </div>
         <div className="detail-row">
