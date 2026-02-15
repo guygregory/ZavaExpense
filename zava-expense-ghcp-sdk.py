@@ -22,8 +22,7 @@ async def main():
 
     # Create a session with MCP servers
     session = await client.create_session({
-        "model": "claude-sonnet-4.5",
-        #"model": "gpt-5.3-codex",
+        "model": "claude-haiku-4.5",
         "skills_path": [".github/skills"],
         "mcp_servers": {
             "workiq": {
