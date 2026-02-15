@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
 import YAML from "yaml";
 import { LocaleContext, type LocaleContextValue } from "./LocaleContext";
 import {
@@ -94,13 +94,25 @@ export function LocaleProvider({ children }: LocaleProviderProps) {
     };
   }, []);
 
+  const changeLocale = useCallback((localeId: string) => {
+    const normalized = normalizeLocaleId(localeId);
+    if (!normalized) return;
+    loadLocaleById(normalized).then((loaded) => {
+      if (loaded) {
+        sessionStorage.setItem(SESSION_LOCALE_KEY, loaded.id);
+        setLocale(loaded);
+      }
+    });
+  }, []);
+
   const value = useMemo<LocaleContextValue>(
     () => ({
       locale,
       formatCurrency: (amount) => formatCurrencyForLocale(amount, locale),
       formatDate: (dateValue) => formatDateForLocale(dateValue, locale.dateFormat),
+      setLocale: changeLocale,
     }),
-    [locale]
+    [locale, changeLocale]
   );
 
   return <LocaleContext.Provider value={value}>{children}</LocaleContext.Provider>;

@@ -1,7 +1,8 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import ExpenseManagement from "./pages/ExpenseManagement";
 import ReportDetail from "./pages/ReportDetail";
 import { LocaleProvider } from "./localization/LocaleProvider";
+import SettingsMenu from "./components/SettingsMenu";
 import "./App.css";
 
 function App() {
@@ -10,8 +11,11 @@ function App() {
       <BrowserRouter>
         <div className="app-shell" data-testid="app-shell">
           <header className="top-banner" data-testid="top-banner">
-            <img src="/zavalogo.png" alt="Logo" className="top-banner__logo" />
-            <span className="top-banner__title">Expense</span>
+            <Link to="/" className="top-banner__home">
+              <img src="/zavalogo.png" alt="Logo" className="top-banner__logo" />
+              <span className="top-banner__title">Expense</span>
+            </Link>
+            <SettingsMenu />
           </header>
           <Routes>
             <Route path="/" element={<ExpenseManagement />} />

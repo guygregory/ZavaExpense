@@ -10,10 +10,12 @@ export interface LocaleContextValue {
   locale: LocaleConfig;
   formatCurrency: (amount: number) => string;
   formatDate: (value: string) => string;
+  setLocale: (localeId: string) => void;
 }
 
 export const LocaleContext = createContext<LocaleContextValue>({
   locale: DEFAULT_LOCALE,
   formatCurrency: (amount) => formatCurrencyForLocale(amount, DEFAULT_LOCALE),
   formatDate: (value) => formatDateForLocale(value, DEFAULT_LOCALE.dateFormat),
+  setLocale: () => {},
 });
