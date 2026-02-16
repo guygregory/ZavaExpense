@@ -80,7 +80,7 @@ When creating a new expense item:
 2. **If multiple receipts exist**, analyze all receipts upfront before opening the browser:
    - For `.png` and `.jpg` files: Analyze each receipt using LLM Vision capabilities to extract transaction details
    - For `.pdf` files: Use the `pypdf` Python library to extract text from the PDF, then parse the extracted text to identify transaction details (see Step 4)
-   - Run WorkIQ lookups (Step 5) for each unique transaction date
+   - Run WorkIQ lookups (Step 5) for **each receipt separately** - send a separate WorkIQ MCP request for each receipt, even if multiple receipts share the same transaction date
    - Collect all extracted data (date, merchant, amount, category, business purpose) into a batch list
 3. Then proceed to process each receipt sequentially in the browser (Steps 6-7), using the pre-collected data to minimize context switching between vision/calendar tools and browser automation
 4. **If only one receipt exists**, proceed directly to Step 4
@@ -113,27 +113,29 @@ Then parse the extracted text to identify the required fields.
 5. **Receipt Details**: Any relevant details for the description
 
 ### Step 5: Determine Business Purpose via WorkIQ
-1. Use WorkIQ MCP tool to check the calendar for the transaction date
-2. **Use a targeted query** include context from the receipt to narrow results. For example, "What meetings are on [date]?". Avoid asking for all events across a date range
-3. Identify what event, meeting, or business activity occurred on that date
-4. **Confirm the event details**:
+1. **Send a separate WorkIQ MCP request for each receipt** - do not batch multiple receipts into a single WorkIQ query
+2. For each receipt, use WorkIQ MCP tool to check the calendar for the transaction date from that specific receipt
+3. **Use a targeted query** that only retrieves events whose title includes the word "Zava" and that occur on the same day as the receipt transaction date. Avoid asking for all events across a broad date range
+4. Identify what event, meeting, or business activity occurred on that matching date
+5. **Confirm the event details**:
    - Event title
    - Date(s)
    - Location (if specified)
-5. Formulate a business justification based on the calendar context
-6. Example: "Transportation to customer meeting at [Location]" or "Hotel accommodation for [Event Name]"
+   - Verify title contains "Zava"
+6. Formulate a business justification based on the calendar context
+7. Example: "Transportation to customer meeting at [Location]" or "Hotel accommodation for [Event Name]"
 
 ### Step 6: Create New Expense Item
 1. In the open expense report, click "+ New expense"
 2. A "New expense" panel appears on the right side
-3. Fill in the form fields:
+3. Fill in the form fields in this order:
+   - **Business purpose**: Enter the natural language description combining receipt details and WorkIQ calendar context (FILL THIS FIRST)
    - **Category**: Select from dropdown (e.g., "Travel")
    - **Date**: The date input field uses `type="date"`, so **always use `yyyy-MM-dd` format** (e.g., `2026-01-28`). Do NOT use `DD/MM/YYYY`.
    - **Amount**: Enter the amount from receipt
    - **Currency**: Select "GBP" (always use GBP)
    - **Merchant**: Enter the merchant name from receipt
-   - **Business purpose**: Enter the natural language description combining receipt details and WorkIQ calendar context
-4. **Form filling strategy**: Fill the date field separately first to confirm the format is accepted, then batch-fill the remaining text fields (Amount, Merchant, Business Purpose) together using `fill_form`. The Category and Currency dropdowns should also be handled individually as they require selection interactions.
+4. **Form filling strategy**: Fill the Business purpose field first, then proceed with the remaining fields from top down. Handle the Category and Currency dropdowns individually as they require selection interactions. The Date field uses `type="date"` format. Text fields (Amount, Merchant) can be filled together using `fill_form`.
 5. Click "Save" button
 
 ### Step 7: Attach Receipt

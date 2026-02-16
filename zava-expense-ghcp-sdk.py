@@ -33,7 +33,7 @@ async def main():
             "playwright": {
                 "type": "local",
                 "command": "npx",
-                "args": ["@playwright/mcp@latest"],
+                "args": ["@playwright/mcp@latest","--browser=msedge"], # Remove --browser=msedge to use default browser
                 "tools": ["*"],
             },
         },
