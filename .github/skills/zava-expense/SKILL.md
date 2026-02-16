@@ -1,6 +1,6 @@
 ---
 name: zava-expense
-description: Skill for adding expense items to expense reports in the Zava Expense system. Uses AI vision to analyze receipt images (.png), extract transaction details, categorize expenses, and attach receipts. Integrates with WorkIQ for calendar lookup to determine business purpose. Use when users ask to process receipts, add expenses, create expense reports, or manage expense claims.
+description: Skill for adding expense items to expense reports in the Zava Expense system. Uses AI vision to analyze receipt images and PDFs (.png, .jpg, .pdf), extract transaction details, categorize expenses, and attach receipts. Integrates with WorkIQ for calendar lookup to determine business purpose. Use when users ask to process receipts, add expenses, create expense reports, or manage expense claims.
 ---
 
 # Zava Expense Tool
@@ -16,7 +16,7 @@ This skill enables interaction with the Zava Expense system for processing expen
 ## Receipt File Location
 
 - **Receipts Directory**: `./receipts/uk`
-- **File Format**: `.png` images only
+- **Allowed file types**: `.png`, `.jpg`, `.pdf`
 - Only access files in the receipts directory - do not access any other files or folders on the local PC 
 
 ## Required Tools
@@ -75,9 +75,9 @@ When creating a new expense item:
    - Save the new report
 
 ### Step 3: Check Receipt Files and Batch Analyze
-1. Check the receipts directory for `.png` files
+1. Check the receipts directory for receipt files (see allowed file types above)
 2. **If multiple receipts exist**, analyze all receipts upfront before opening the browser:
-   - Run AI Vision (Step 4) on every `.png` file first to extract transaction details
+   - Run AI Vision (Step 4) on every receipt file first to extract transaction details
    - Run WorkIQ lookups (Step 5) for each unique transaction date
    - Collect all extracted data (date, merchant, amount, category, business purpose) into a batch list
 3. Then proceed to process each receipt sequentially in the browser (Steps 6-7), using the pre-collected data to minimize context switching between vision/calendar tools and browser automation
@@ -123,13 +123,13 @@ Use built-in vision capabilities to extract the following from the receipt image
 4. Click "Actions" and select "Attach receipt"
 5. A "Receipts" panel opens with "Add new" tab
 6. Click "Browse" button
-7. In the file dialog, select the corresponding `.png` receipt file from the receipts directory
+7. In the file dialog, select the corresponding receipt file from the receipts directory
 8. Click "Open" to upload
 9. Click "Upload" button to attach the receipt
 10. Click "OK" or "Close" to complete
 
 ### Step 8: Repeat for Additional Receipts
-- Repeat Steps 4-7 for each `.png` receipt file in the receipts directory
+- Repeat Steps 4-7 for each receipt file in the receipts directory
 
 ### Step 9: Return to Expense Management Page and Close Browser
 1. After all receipts have been processed, click "Save and close" to return to the Expense Management page
@@ -233,7 +233,7 @@ Use built-in vision capabilities to extract the following from the receipt image
 ## Error Handling
 
 - **No Draft report found**: Create a new expense report named with current month
-- **No .png files in receipt folder**: Inform user that no receipts were found to process
+- **No receipt files in receipt folder**: Inform user that no receipts were found to process
 - **Cannot determine expense category**: Ask user to specify the category
 - **WorkIQ calendar empty**: Generate description based on receipt details only, note that business purpose could not be determined from calendar
 - **Receipt image unclear**: Request user to provide a clearer receipt or manual input
