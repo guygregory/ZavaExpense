@@ -15,7 +15,7 @@ This skill enables interaction with the Zava Expense system for processing expen
 
 ## Receipt File Location
 
-- **Receipts Directory**: `./receipts/uk`
+- **Receipts Directory**: `./receipts/us`
 - **Allowed file types**: `.png`, `.jpg`, `.pdf`
 - Only access files in the receipts directory - do not access any other files or folders on the local PC 
 
