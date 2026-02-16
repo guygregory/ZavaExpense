@@ -21,13 +21,14 @@ export default function ReceiptUploadModal({
   const [notes, setNotes] = useState("");
   const [docName, setDocName] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const supportedMimeTypes = ["image/png", "image/jpeg", "application/pdf"];
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setError("");
     const file = e.target.files?.[0];
     if (!file) return;
-    if (file.type !== "image/png") {
-      setError("Only .png files are allowed.");
+    if (!supportedMimeTypes.includes(file.type)) {
+      setError("Only .png, .jpg, and .pdf files are allowed.");
       setSelectedFile(null);
       return;
     }
@@ -37,7 +38,7 @@ export default function ReceiptUploadModal({
 
   const handleUpload = () => {
     if (!selectedFile) {
-      setError("Please select a .png file first.");
+      setError("Please select a .png, .jpg, or .pdf file first.");
       return;
     }
     const reader = new FileReader();
@@ -100,7 +101,7 @@ export default function ReceiptUploadModal({
               <input
                 ref={fileInputRef}
                 type="file"
-                accept=".png,image/png"
+                accept=".png,.jpg,.jpeg,.pdf,image/png,image/jpeg,application/pdf"
                 style={{ display: "none" }}
                 data-testid="receipt-file-input"
                 onChange={handleFileChange}
@@ -110,6 +111,9 @@ export default function ReceiptUploadModal({
                   {selectedFile.name}
                 </span>
               )}
+              <span className="file-name" data-testid="receipt-supported-types">
+                Supported: .png, .jpg, .pdf
+              </span>
             </div>
 
             <div className="form-group">

@@ -1,6 +1,6 @@
 ---
 name: zava-expense
-description: Skill for adding expense items to expense reports in the Zava Expense system. Uses AI vision to analyze receipt images and PDFs (.png, .jpg, .pdf), extract transaction details, categorize expenses, and attach receipts. Integrates with WorkIQ for calendar lookup to determine business purpose. Use when users ask to process receipts, add expenses, create expense reports, or manage expense claims.
+description: Skill for adding expense items to expense reports in the Zava Expense system. Uses the LLM's vision capabilities to analyze receipt images (.png, .jpg) and the pypdf library to extract text from PDF receipts (.pdf), extract transaction details, categorize expenses, and attach receipts. Integrates with WorkIQ for calendar lookup to determine business purpose. Use when users ask to process receipts, add expenses, create expense reports, or manage expense claims.
 ---
 
 # Zava Expense Tool
@@ -25,7 +25,8 @@ This skill enables interaction with the Zava Expense system for processing expen
 |------|---------|
 | Playwright MCP | Browser automation for the Zava Expense system |
 | WorkIQ MCP | Calendar lookup to determine business purpose |
-| Built-in Vision | Analyze receipt images to extract transaction details |
+| LLM Vision | Analyze receipt images (.png, .jpg) to extract transaction details |
+| pypdf (Python library) | Extract text from PDF receipt files (.pdf) |
 
 ## Expense Categories
 
@@ -77,14 +78,33 @@ When creating a new expense item:
 ### Step 3: Check Receipt Files and Batch Analyze
 1. Check the receipts directory for receipt files (see allowed file types above)
 2. **If multiple receipts exist**, analyze all receipts upfront before opening the browser:
-   - Run AI Vision (Step 4) on every receipt file first to extract transaction details
+   - For `.png` and `.jpg` files: Analyze each receipt using LLM Vision capabilities to extract transaction details
+   - For `.pdf` files: Use the `pypdf` Python library to extract text from the PDF, then parse the extracted text to identify transaction details (see Step 4)
    - Run WorkIQ lookups (Step 5) for each unique transaction date
    - Collect all extracted data (date, merchant, amount, category, business purpose) into a batch list
 3. Then proceed to process each receipt sequentially in the browser (Steps 6-7), using the pre-collected data to minimize context switching between vision/calendar tools and browser automation
 4. **If only one receipt exists**, proceed directly to Step 4
 
-### Step 4: Analyze Receipt with AI Vision
-Use built-in vision capabilities to extract the following from the receipt image:
+### Step 4: Analyze Each Receipt
+
+Choose the extraction method based on the file type:
+
+#### For image files (.png, .jpg) — Use LLM Vision
+Use built-in LLM vision capabilities to extract the following from the receipt image.
+
+#### For PDF files (.pdf) — Use pypdf
+Use the `pypdf` Python library to extract text from the PDF receipt. Run a Python script in the terminal to read the PDF and print the extracted text:
+
+```python
+from pypdf import PdfReader
+reader = PdfReader("<path-to-receipt.pdf>")
+text = "\n".join(page.extract_text() or "" for page in reader.pages)
+print(text)
+```
+
+Then parse the extracted text to identify the required fields.
+
+#### Required fields to extract (all file types)
 
 1. **Transaction Date**: The date the purchase was made (NOT the travel date if different)
 2. **Merchant Name**: The vendor/business name on the receipt
@@ -208,7 +228,7 @@ Use built-in vision capabilities to extract the following from the receipt image
 2. **Transaction date** is the date on the receipt, not the travel date (they may differ)
 3. **Date format**: Always use `yyyy-MM-dd` for the date input field (it is `type="date"`). Never use `DD/MM/YYYY`.
 4. **File upload strategy**: Ensure receipt files are accessible in the receipts directory before attempting upload. If permission issues occur, verify the file path and retry.
-5. **Use AI vision** to analyze receipt images - no additional code required
+5. **Use LLM Vision** to analyze receipt images (.png, .jpg) - no additional code required. **Use pypdf** to extract text from PDF receipts (.pdf) by running a Python script in the terminal
 6. **Use WorkIQ** with highly targeted queries that include context from the receipt such as location or merchant (e.g., "What is the business event in [location] on [date]?") to minimize returned data and avoid retrieving excessive calendar information
 7. **Only access** the specified receipt folder - do not browse other directories
 8. **Match expense category** to receipt type (transportation, hotel, hardware, etc.)
