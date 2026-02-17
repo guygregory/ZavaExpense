@@ -15,17 +15,17 @@ An intelligent expense management system demonstrating GitHub Copilot SDK capabi
 
 ## 📋 Table of Contents
 
-- [Overview](#overview)
-- [Technology Stack](#technology-stack)
-- [Architecture](#architecture)
-- [Key Features](#key-features)
-- [Getting Started](#getting-started)
-- [Project Structure](#project-structure)
-- [Usage](#usage)
-- [Development](#development)
-- [Testing](#testing)
-- [Contributing](#contributing)
-- [License](#license)
+- [Overview](#-overview)
+- [Technology Stack](#-technology-stack)
+- [Architecture](#-architecture)
+- [Key Features](#-key-features)
+- [Getting Started](#-getting-started)
+- [Project Structure](#-project-structure)
+- [Usage](#-usage)
+- [Development](#-development)
+- [Testing](#-testing)
+- [Contributing](#-contributing)
+- [License](#-license)
 
 ## 🎯 Overview
 
