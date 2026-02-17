@@ -446,7 +446,7 @@ Security issues should be reported to the Microsoft Security Response Center (MS
 
 ## 🙏 Acknowledgments
 
-- Built with [GitHub Copilot SDK](https://github.com/microsoft/copilot-python-sdk)
+- Built with [GitHub Copilot SDK](https://github.com/github/copilot-sdk)
 - Powered by [Claude Haiku 4.5](https://www.anthropic.com/claude)
 - Browser automation by [Playwright MCP](https://github.com/microsoft/playwright)
 - Calendar lookup via [WorkIQ MCP](https://github.com/microsoft/work-iq-mcp)
