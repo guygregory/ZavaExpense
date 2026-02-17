@@ -2,9 +2,9 @@
 
 [![Demo Video](https://img.shields.io/badge/🎥_Watch_Demo-YouTube-red)](https://www.youtube.com/watch?v=QK3LyOAmDvw)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-![Python](https://img.shields.io/badge/python-3.x-blue.svg)
-![TypeScript](https://img.shields.io/badge/typescript-5.9-blue.svg)
-![React](https://img.shields.io/badge/react-19.2-61dafb.svg)
+[![Python](https://img.shields.io/badge/python-3.x-blue.svg)](https://www.python.org/)
+[![TypeScript](https://img.shields.io/badge/typescript-5.9-blue.svg)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/react-19.2-61dafb.svg)](https://react.dev/)
 
 An intelligent expense management system demonstrating GitHub Copilot SDK capabilities with automated receipt processing, browser automation, and AI-powered expense categorization.
 
