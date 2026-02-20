@@ -43,19 +43,10 @@ This project serves as a practical example of how AI can streamline line-of-busi
 ### Backend
 - **Python 3.x** - Core automation scripting
 - **[GitHub Copilot SDK](https://github.com/microsoft/copilot-python-sdk)** - AI agent orchestration
-- **pypdf** - PDF text extraction for receipt processing
 
 ### Frontend
 - **React 19.2** - UI framework
 - **TypeScript 5.9** - Type-safe development
-- **Vite 7.3** - Build tool and dev server
-- **React Router 7.13** - Client-side routing
-- **YAML 2.8** - Locale configuration management
-
-### Development Tools
-- **ESLint** - Code linting
-- **TypeScript ESLint** - TypeScript-specific linting rules
-- **Vite Plugin React** - Fast refresh and JSX transform
 
 ### Integration & Automation
 - **Playwright MCP** - Browser automation for web interaction
