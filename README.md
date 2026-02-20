@@ -298,7 +298,7 @@ ZavaExpense/
    - Creates expense items with all required fields
    - Attaches receipt files
    - Saves and closes the report
-
+<!--
 ### Manual Web Interface
 
 Navigate to the web application URL and:
@@ -406,7 +406,7 @@ Test the Python automation script by:
 1. Placing sample receipts in the receipts directory
 2. Running the script in a controlled environment
 3. Verifying the expense report creation and receipt attachment
-
+-->
 ## 🤝 Contributing
 
 We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
