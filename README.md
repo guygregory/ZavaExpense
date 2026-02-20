@@ -10,8 +10,9 @@ An intelligent expense management system demonstrating GitHub Copilot SDK capabi
 
 | 🎥 Zava Expense - GitHub Copilot SDK Demo |
 |---|
-| [![Watch the demo](https://github.com/user-attachments/assets/d9e91128-8eb5-40e6-947b-df7fabfe84b2)](https://www.youtube.com/watch?v=QK3LyOAmDvw) |
+| [![Watch the demo](https://github.com/user-attachments/assets/859b52b1-c1c0-49c5-9a4e-5344eb090704)](https://www.youtube.com/watch?v=QK3LyOAmDvw) |
 | [Watch on YouTube ↗](https://www.youtube.com/watch?v=QK3LyOAmDvw) |
+
 
 ## 📋 Table of Contents
 
