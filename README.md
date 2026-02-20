@@ -80,6 +80,9 @@ A Python-based automation system that:
 3. **Integrates MCP servers** for Playwright and WorkIQ
 4. **Processes natural language commands** to automate expense report tasks
 
+<img width="741" height="585" alt="image" src="https://github.com/user-attachments/assets/d0f13655-59ab-48e5-9692-a9d112051c3e" />
+
+<!--
 ```
 ┌──────────────────────────────────────────────────────────────────┐
 │  User Command (e.g. "Add the receipt(s) to my expense report.")  │
@@ -104,7 +107,7 @@ A Python-based automation system that:
 │  (React SPA - Expense Management UI)    │
 └─────────────────────────────────────────┘
 ```
-
+-->
 ## ✨ Key Features
 
 ### 🤖 Automated Receipt Processing
