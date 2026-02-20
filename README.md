@@ -183,7 +183,7 @@ A Python-based automation system that:
    }
    ```
 
-### Running the Application
+### Self-hosting the Zava Expense Web App (Optional)
 
 #### Start the Web Application (Development Mode)
 ```bash
